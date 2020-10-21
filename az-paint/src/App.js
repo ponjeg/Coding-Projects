@@ -1,26 +1,74 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
-function App() {
+export default function App() {
+  const [selectedColor, setselectedColor] = useState("white");
+  const [border, setBorder] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input onChange={(e) => setselectedColor(e.target.value)} />
+      <Grid paintColor={selectedColor} borderOn={border} />
+      <button onClick={() => setBorder((border) => !border)}>
+        toggle border
+      </button>
     </div>
   );
 }
 
-export default App;
+const Grid = ({ paintColor, borderOn }) => {
+  return (
+    <div>
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+      <Row paintColor={paintColor} borderOn={borderOn} />
+    </div>
+  );
+};
+
+const Row = ({ paintColor, borderOn }) => {
+  return (
+    <div className="Row">
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+      <Block paintColor={paintColor} borderOn={borderOn} />
+    </div>
+  );
+};
+
+const Block = ({ paintColor, borderOn }) => {
+  const [color, setColor] = useState("white");
+  let border = "";
+  if (borderOn) {
+    border = "2px solid black";
+  } else {
+    border = "none";
+  }
+
+  return (
+    <div
+      className="Block"
+      style={{
+        backgroundColor: color,
+        border: border
+      }}
+      onClick={() => setColor(paintColor)}
+      draggable={true}
+      onDragEnter={() => setColor(paintColor)}
+    ></div>
+  );
+};
